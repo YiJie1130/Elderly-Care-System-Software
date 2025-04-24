@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Record Data - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .search-section {
+            margin-bottom: 20px;
+        }
+        .search-section input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-section input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-section input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .create-record {
+            margin-bottom: 20px;
+        }
+        .create-record input[type="submit"] {
+            background-color: #007bff; /* Green color for create button */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .create-record input[type="submit"]:hover {
+            background-color: #007bff; /* Darker green on hover */
+        }
+        .patient-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px; /* Space between image and details */
+            margin-top: 20px;
+        }
+        .patient-image {
+            max-width: 100px; /* Smaller image size */
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .patient-details {
+            text-align: left;
+            flex: 1; /* Take up remaining space */
+        }
+        .patient-details p {
+            margin: 5px 0;
+            color: #333;
+        }
+        .patient-details p strong {
+            color: #555;
+        }
+        .form-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-actions a, .form-actions input[type="submit"] {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .form-actions a.back {
+            background-color: #28a745; /* Green color for view button */
+        }
+        .form-actions a.update {
+            background-color: #ffc107; /* Yellow color for update button */
+        }
+        .form-actions a.delete {
+            background-color: #dc3545; /* Red color for delete button */
+        }
+        .form-actions a:hover, .form-actions input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+        .disabled {
+            pointer-events: none; /* Prevents clicks */
+            opacity: 0.5; /* Makes it look disabled */
+            cursor: not-allowed; /* Changes the cursor */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Big Title -->
+        <h1>Medical Record Data</h1>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <form id="search-form" method="post">
+                <input type="text" placeholder="Search Elderly ID" name="search_patient_id" id="search_patient_id">
+                <input type="submit" value="Search" name="search_patient">
+            </form>
+        </div>
+
+        <!-- Create New Medical Record Button (Centered) -->
+        <div class="create-record">
+            <a href="(18)New Medical Record Screen.php"><input type="submit" id="create-button" value="New Medical Record" disabled></a>
+        </div>
+        <!-- Patient Info -->
+        <div id="patient-details" class="patient-info">
+            <!-- Patient Image -->
+            <img src="placeholder.jpg" alt="Elderly Image" class="patient-image"> <!-- Replace with actual image -->
+
+            <!-- Patient Details -->
+            <div class="patient-details">
+                <p><strong>Elderly ID:</strong> -</p>
+                <p><strong>Elderly Name:</strong> -</p>
+                <p><strong>Age:</strong> -</p>
+                <p><strong>Contact:</strong> -</p>
+                <p><strong>Guardian:</strong> -</p>
+                <p><strong>Guardian Contact:</strong> -</p>
+                <p><strong>Elderly's Status:</strong> -</p>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class='form-actions'>
+            <a href='(14)Consultant Dashboard.html' class='back'>Back</a>
+            <a href='#' id='update-button' class='update disabled'>Update Medical Record</a>
+            <a href='#' id='delete-button' class='delete disabled'>Delete</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const searchQuery = document.getElementById('search_patient_id').value;
+
+            if (!searchQuery.trim()) {
+                alert('Please Enter Elderly ID to Search.');
+                event.preventDefault();
+            }
+            else {
+                // Send AJAX request
+                event.preventDefault();
+
+                fetch('medical_record_data.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `search_patient=true&search_patient_id=${encodeURIComponent(searchQuery)}`,
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Check if the response contains the error message
+                        if (data.includes('No Elderly Found!')) {
+                            alert('No Elderly Found!');
+                        } else {
+                            // Update the search results section with the response
+                            document.getElementById('patient-details').innerHTML = data;
+
+                            // Enable the Edit and Delete buttons
+                            document.getElementById('create-button').removeAttribute('disabled');
+                            document.getElementById('update-button').classList.remove('disabled');
+                            document.getElementById('delete-button').classList.remove('disabled');
+
+                            const patientID = document.getElementById('search_patient_id').value;
+                            document.getElementById('update-button').setAttribute('onclick', `updateRecord('${patientID}')`);
+                            document.getElementById('delete-button').setAttribute('onclick', `deleteReport('${patientID}')`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+
+        function updateRecord(patientID) {
+            window.location.href = "(19)Update Medical Record Screen.php?patient_id=" + patientID;
+        }
+
+        function deleteReport(patientID) {
+            const userConfirmed = confirm("Are you sure you want to delete this medical record?");
+
+            if (userConfirmed) {
+                // Proceed with the deletion
+                window.location.href = "delete_medical_record.php?patient_id=" + patientID;
+            } else {
+                // If user cancels, do nothing or alert them
+                alert('Deletion cancelled.');
+            }
+        }
+    </script>
+</body>
+</html>

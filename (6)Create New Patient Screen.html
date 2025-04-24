@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Patient - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 400px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="number"], input[type="tel"], input[type="file"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        select {
+            width: 90%; /* Adjusted width */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .file-input-container {
+            display: flex;
+            align-items: center; /* Aligns the label and input vertically */
+            justify-content: flex-start;
+        }
+        .file-input-container label {
+            margin-right: 10px; /* Adds space between label and input */
+        }
+        .form-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-actions a, .form-actions input[type="submit"] {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .form-actions a.back {
+            background-color: #6c757d;
+        }
+        .form-actions a:hover, .form-actions input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Elderly</h1>
+        <form action="database_function.php" method="post" enctype="multipart/form-data">
+            <input type="text" placeholder="Enter Elderly ID" name="patient-id" required min="1" inputmode="numeric" pattern="\d*">
+            <input type="text" placeholder="Enter Elderly's Name" name="patient-name" required>
+            <input type="number" placeholder="Enter Elderly's Age" name="patient-age" required min="50">
+            <input type="tel" placeholder="Enter Elderly's Contact" name="patient-contact" required inputmode="numeric" pattern="\d*">
+            <input type="text" placeholder="Enter Elderly's Guardian Name" name="patient-guardian" required>
+            <input type="tel" placeholder="Enter Guardian's Contact" name="guardian-contact" required inputmode="numeric" pattern="\d*">
+            <select name="patient-status" required>
+                <option value="" disabled selected>Elderly's Status</option>
+                <option value="healthy">Healthy</option>
+                <option value="unhealthy">Unhealthy</option>
+            </select>
+            <div class="file-input-container">
+                <label for="patient-image">Image: </label>
+                <input type="file" id="patient-image" name="patient-image" accept=".jpg,.jpeg,.png" required>
+            </div>
+            <div class="form-actions">
+                <a href="(5)report management screen.html" class="back">Back</a>
+                <input type="submit" value="Continue" name="create_patient">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

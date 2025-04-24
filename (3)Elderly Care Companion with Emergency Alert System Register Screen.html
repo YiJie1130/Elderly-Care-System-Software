@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 300px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"] {
+            width: 90%; /* Adjusted width */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        select {
+            width: 97%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            width: 30%; /* Adjusted width */
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .login-link {
+            margin-top: 15px;
+        }
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <form id="registerForm" action="database_function.php" method="post">
+            <input type="text" placeholder="User ID" name="id" required min="1" inputmode="numeric" pattern="\d*">
+            <input type="text" placeholder="Username" name="username" required>
+            <input type="password" placeholder="Password" maxlength="12" name="password" required>
+            <input type="number" placeholder="Age" name="age" required min="1">
+            <select name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <input type="email" placeholder="Email" name="email" required>
+            <input type="text" placeholder="Address" name="address" required>
+            <input type="tel" placeholder="Phone No." name="phone" required inputmode="numeric" pattern="\d*">
+            <select name="role" required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="elderly">Elderly</option>
+                <option value="consultant">Consultant</option>
+                <option value="guardian">Guardian</option>
+            </select>
+            <input type="submit" value="Submit" name="register">
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="(2)Elderly Care Companion with Emergency Alert System Login Screen.html">Login here</a>
+        </div>
+    </div>
+</body>
+</html>

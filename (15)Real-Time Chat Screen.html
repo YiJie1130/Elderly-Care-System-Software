@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5; /* Light grey background */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 400px;
+        }
+        .header {
+            background-color: #075e54; /* WhatsApp green */
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .chat-box {
+            height: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #fff;
+            text-align: left;
+        }
+        .chat-box .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px; /* Space between avatar and message content */
+            margin-bottom: 10px;
+        }
+        .chat-box .message .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ccc; /* Placeholder color for avatar */
+        }
+        .chat-box .message .content {
+            flex: 1;
+        }
+        .chat-box .message .sender {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .chat-box .message .text {
+            color: #333;
+        }
+        .chat-box .message .timestamp {
+            font-size: 12px;
+            color: #777;
+        }
+        .chat-input {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .chat-input button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+        .back-button {
+            text-align: center;
+            padding: 10px;
+            background-color: #075e54; /* WhatsApp green */
+        }
+        .back-button a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #075e54; /* Darker green */
+            padding: 5px 20px;
+            border-radius: 5px;
+            display: block;
+            box-sizing: border-box;
+        }
+        .back-button a:hover {
+            background-color: #075e54;
+        }
+        .sos-button {
+            position: absolute;
+            top: 20px;
+            left: 8px;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sos-button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="sos-button" onclick="triggerSOS()">SOS</button>
+        <!-- Header -->
+        <div class="header">Real-Time Chat</div>
+
+        <div class="chat-box" id="chat-box"></div>
+        <div class="chat-input">
+            <input type="text" id="chat-message" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <!-- Back Button -->
+        <div class="back-button">
+            <a href="(14)Consultant Dashboard.html">Back</a>
+        </div>
+    </div>
+
+    <script>
+        function triggerSOS() {
+            // Open phone dialer (works on mobile)
+            window.location.href = "tel:+60176745721";
+
+            // Delay redirection to the SOS Alert screen after a few seconds
+            setTimeout(() => {
+                window.location.href = "Consultant Click SOS.html";
+            }, 5000); // Redirect after 3 seconds (adjust if needed) ---- 5000 milisecond = 5 second
+        }
+
+        // Fetch and display messages from the database
+        function fetchMessages() {
+            const chatBox = document.getElementById('chat-box');
+
+            fetch('get_message.php')
+                .then(response => response.json())
+                .then(data => {
+                    chatBox.innerHTML = ''; // Clear existing messages
+                    data.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.classList.add('message');
+
+                        messageDiv.innerHTML = `
+                                <div class="sender">${msg.name}</div>
+                                <div>: </div>
+                                <div class="text">${msg.message}</div>
+                                <div class="timestamp">${msg.date}</div>
+                            `;
+                        chatBox.appendChild(messageDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching messages:', error));
+        }
+
+        // Send a message
+        function sendMessage() {
+            const message = document.getElementById('chat-message').value;
+            const sender = 'Consultant'; // Change based on logged-in user
+
+            if (message.trim() !== '') {
+                fetch('send_message.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `name=${sender}&message=${message}`
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data); // Debugging
+                        document.getElementById('chat-message').value = ''; // Clear the input field
+                        fetchMessages(); // Refresh the chat box with new message
+                    })
+                    .catch(error => console.error('Error sending message:', error));
+            }
+        }
+
+        // Polling every 3 seconds to fetch new messages
+        setInterval(fetchMessages, 100); // Adjust the time as needed
+    </script>
+</body>
+</html>

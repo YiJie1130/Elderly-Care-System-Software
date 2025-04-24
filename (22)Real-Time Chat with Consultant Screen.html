@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat with Consultant - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 400px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .top-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .top-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .top-buttons button.sos {
+            background-color: #dc3545; /* Red color for SOS button */
+            color: #fff;
+        }
+        .top-buttons button.sos:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+        .top-buttons button.end {
+            background-color: #6c757d; /* Grey color for end button */
+            color: #fff;
+        }
+        .top-buttons button.end:hover {
+            background-color: #5a6268; /* Darker grey on hover */
+        }
+        .chat-box {
+            height: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #fff;
+            text-align: left;
+        }
+        .chat-box .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px; /* Space between avatar and message content */
+            margin-bottom: 10px;
+        }
+        .chat-box .message .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ccc; /* Placeholder color for avatar */
+        }
+        .chat-box .message .content {
+            flex: 1;
+        }
+        .chat-box .message .sender {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .chat-box .message .text {
+            color: #333;
+        }
+        .chat-box .message .timestamp {
+            font-size: 12px;
+            color: #777;
+        }
+        .chat-input {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .chat-input button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Big Title -->
+        <h1>Real-Time Chat with Consultant</h1>
+
+        <!-- Top Buttons: SOS (Left) and End (Right) -->
+        <div class="top-buttons">
+            <button class="sos" onclick="triggerSOS()">SOS</button>
+            <button class="end" onclick="endChat()">End</button>
+        </div>
+
+        <!-- Chat Box -->
+        <div class="chat-box" id="chat-box"></div>
+        <div class="chat-input">
+            <input type="text" id="chat-message" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to trigger SOS
+        function triggerSOS() {
+            // Open phone dialer (works on mobile)
+            window.location.href = "tel:+60133339389";
+
+            // Delay redirection to the SOS Alert screen after a few seconds
+            setTimeout(() => {
+                window.location.href = "(27)SOS Alert Screen Call.html";
+            }, 5000); // Redirect after 3 seconds (adjust if needed) ---- 5000 milisecond = 5 second
+        }
+
+        // Function to end the chat
+        function endChat() {
+            // Confirm the action
+            const userConfirmed = confirm("Are you sure you want to end the chat?");
+
+            if (userConfirmed) {
+                // Make a request to delete all chat messages
+                fetch('end_chat.php', {
+                    method: 'GET', // Use GET for simplicity
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data === "success") {
+                            alert("Chat End.");
+                            window.location.href = "(21)Elderly Dashboard.html"; // Redirect to another page
+                        }
+                        else{
+                            alert(data);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error end chat:', error);
+                    });
+            } 
+        }
+
+        // Fetch and display messages from the database
+        function fetchMessages() {
+            const chatBox = document.getElementById('chat-box');
+
+            fetch('get_message.php')
+                .then(response => response.json())
+                .then(data => {
+                    chatBox.innerHTML = ''; // Clear existing messages
+                    data.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.classList.add('message');
+                        messageDiv.innerHTML = `
+                        <div class="sender">${msg.name}</div>
+                        <div>: </div>
+                        <div class="text">${msg.message}</div>
+                        <div class="timestamp">${msg.date}</div>
+                    `;
+                        chatBox.appendChild(messageDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching messages:', error));
+        }
+
+        // Send a message
+        function sendMessage() {
+            const message = document.getElementById('chat-message').value;
+            const senderName = 'Elderly'; // Change based on logged-in user
+
+            if (message.trim() !== '') {
+                fetch('send_message.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `name=${senderName}&message=${message}`
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data); // Debugging
+                        document.getElementById('chat-message').value = ''; // Clear the input field
+                        fetchMessages(); // Refresh the chat box with new message
+                    })
+                    .catch(error => console.error('Error sending message:', error));
+            }
+        }
+
+        // Polling every 3 seconds to fetch new messages
+        setInterval(fetchMessages, 100); // Adjust the time as needed
+    </script>
+</body>
+</html>

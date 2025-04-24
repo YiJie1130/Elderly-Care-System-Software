@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 400px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .search-section {
+            margin-bottom: 20px;
+        }
+        .search-section input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-section input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-section input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="number"] {
+            width: 90%; /* Adjusted width to make fields shorter */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        } 
+        select {
+            width: 90%; /* Adjusted width to make fields shorter */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 5%; /* Added padding to align with the form fields */
+        }
+        .form-actions a, .form-actions input[type="submit"] {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .form-actions a.back {
+            background-color: #6c757d;
+        }
+        .form-actions a:hover, .form-actions input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Big Title -->
+        <h1>Update User</h1>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <p>Search account that you want to update using username</p>
+            <form onsubmit="searchUser(event)">
+                <input type="text" id="searchUserID" placeholder="Search User ID" required>
+                <input type="submit" value="Search">
+            </form>
+        </div>
+
+        <div id="afterSearchMessage"></div>
+
+        <!-- Update Form -->
+        <form action="database_function.php" method="post" onsubmit="return validateAndSubmit();">
+            <input type="text" placeholder="User ID" name="id" required min="1" inputmode="numeric" pattern="\d*" readonly>
+            <input type="text" placeholder="Username" name="username" class="update_field" required readonly>
+            <input type="password" placeholder="Password" name="password" class="update_field" required readonly>
+            <input type="number" placeholder="Age" name="age" required class="update_field" min="1" readonly>
+            <select name="gender" required class="update_field" disabled>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+            <input type="email" placeholder="Email" name="email" class="update_field" required readonly>
+            <input type="text" placeholder="Address" name="address" class="update_field" required readonly>
+            <input type="tel" placeholder="Phone No." name="phone" class="update_field" required inputmode="numeric" pattern="\d*" readonly>
+            <select name="role" required class="update_field" disabled>
+                <option value="" disabled selected>Select Role</option>
+                <option value="elderly">Elderly</option>
+                <option value="admin">Admin</option>
+                <option value="consultant">Consultant</option>
+                <option value="guardian">Guardian</option>
+            </select>
+            <div class="form-actions">
+                <a href="(9)Manage User Account Screen.html" class="back">Back</a>
+                <input type="submit" value="Update" name="update_user">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function searchUser(event) {
+            event.preventDefault(); 
+
+            const userID = document.getElementById('searchUserID').value;
+
+            fetch('check_user.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id=${encodeURIComponent(userID)}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        afterSearchMessage.innerHTML = '<p>Below is the information for the user that you have searched.</p>';
+                        enableFields();
+                        populateFields(data.user);
+                    } else {
+                        alert('User does not exist!');
+                        afterSearchMessage.innerHTML = '<p style="color: red;">User does not exist!</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function enableFields() {
+            const fields = document.querySelectorAll('.update_field');
+            fields.forEach(field => field.removeAttribute('readonly'));
+            document.querySelector('select[name="gender"]').disabled = false;
+            document.querySelector('select[name="role"]').disabled = false;
+        }
+
+        function populateFields(user) {
+            document.querySelector('[name="id"]').value = user.User_ID;
+            document.querySelector('[name="username"]').value = user.Username;
+            document.querySelector('[name="password"]').value = user.Password;
+            document.querySelector('[name="age"]').value = user.Age;
+            document.querySelector('[name="gender"]').value = user.Gender;
+            document.querySelector('[name="email"]').value = user.Email;
+            document.querySelector('[name="address"]').value = user.Address;
+            document.querySelector('[name="phone"]').value = user.Phone;
+            document.querySelector('[name="role"]').value = user.Role;
+        }
+
+        function validateAndSubmit() {
+            const username = document.querySelector('[name="username"]').value;
+            if (!username) {
+                alert('Please Search a User ID to Update!');
+                return false; 
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

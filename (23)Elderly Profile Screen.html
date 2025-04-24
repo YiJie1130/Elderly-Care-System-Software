@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Screen - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 300px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .profile-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .profile-options a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 10px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .profile-options a:hover {
+            background-color: #0056b3;
+        }
+        .back-link {
+            margin-top: 20px;
+        }
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* SOS Button */
+        .sos-button {
+            position: absolute;
+            top: 20px; /* Position at the top */
+            left: 20px; /* Position at the left */
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sos-button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Title -->
+        <h1>Profile</h1>
+
+        <!-- Profile Options -->
+        <div class="profile-options">
+            <a href="(24)Elderly View Profile Screen.php">View Profile</a>
+            <a href="(25)Elderly Update Profile Screen.php">Edit Profile</a>
+        </div>
+
+        <!-- Back Link -->
+        <div class="back-link">
+            <a href="(21)Elderly Dashboard.html">Back</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to trigger SOS
+        function triggerSOS() {
+            alert('SOS triggered!'); // Replace with actual SOS logic
+        }
+    </script>
+</body>
+</html>

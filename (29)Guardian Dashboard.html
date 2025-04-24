@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardian Dashboard - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 400px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .dashboard-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .dashboard-options a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 10px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .dashboard-options a:hover {
+            background-color: #0056b3;
+        }
+        .logout-link {
+            margin-top: 20px;
+        }
+        .logout-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .logout-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Message -->
+        <h1>Welcome To Guardian Dashboard</h1>
+
+        <!-- Dashboard Options -->
+        <div class="dashboard-options">
+            <a href="(30)Guardian Profile Screen.html">Profile</a>
+            <a href="(39)Tracking Screen.html">Tracking System</a>
+            <a href="(42)Elderly Medical Record Management Screen.html">Medical Record Data</a>
+        </div>
+
+        <!-- Logout Link -->
+        <div class="logout-link">
+            <a href="#" id="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const confirmLogout = confirm('Are you sure you want to log out?');
+
+            if (confirmLogout) {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

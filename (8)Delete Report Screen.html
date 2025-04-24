@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Confirmation - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+        }
+
+        /* Modal Styles */
+        .modal {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .modal p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .modal .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .modal .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .modal .buttons button.yes {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .modal .buttons button.no {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        .modal .buttons button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal -->
+    <div class="modal">
+        <p>Do you want to delete this report?</p>
+        <div class="buttons">
+            <button class="yes" onclick="deleteReport()">Yes</button>
+            <button class="no" onclick="closeModal()">No</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle report deletion
+        function deleteReport() {
+            alert('Report deleted!'); 
+            window.location.href="(5)report management screen.html";
+        }
+
+        // Function to close the modal (simulate closing behavior)
+        function closeModal() {
+            alert('Deletion canceled.'); 
+            window.location.href = "(5)report management screen.html";
+        }
+    </script>
+</body>
+</html>

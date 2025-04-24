@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Elderly Location</title>
+        <style>
+            html, body, #map {
+                height:80%;
+                width:80%;
+                height: 80vh;
+                width: 95vw;
+                margin: auto;
+            }
+
+             .back-link {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            .back-link a {
+                background-color: #007bff;
+                color: white;
+                padding: 8px 20px;
+                border-radius: 8px;
+                font-size: 16px;
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .back-link a:hover {
+                background-color: #0056b3;
+            }
+        </style>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvtlaqqLRDlDpEbKjh0_djU45mIOAa63s&callback=initMap&libraries=&v=weekly" defer></script>
+    </head>
+    <body>
+        <h1>Elderly Location</h1>
+        <hr>
+        <div id="map"></div>
+        <div class="back-link">
+            <a href="(40)Elderly Location Screen.html">Back</a>
+        </div>
+        
+        <script>
+            function initMap() {
+                let map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: 2.9278, lng: 101.6419 },
+                    zoom: 11
+                })
+                new google.maps.Marker({
+                    position: { lat: 2.9278, lng: 101.6419 },
+                    map: map,
+                    label: "E",
+                    title: "MMU",
+                    draggable: false,
+                    animation: google.maps.Animation.DROP
+                })
+            }
+        </script>
+    </body>
+</html>

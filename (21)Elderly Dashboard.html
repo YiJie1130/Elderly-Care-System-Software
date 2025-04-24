@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elderly Dashboard - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 400px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .dashboard-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .dashboard-options a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 10px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .dashboard-options a:hover {
+            background-color: #0056b3;
+        }
+        .logout-link {
+            margin-top: 20px;
+        }
+        .logout-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .logout-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* SOS Button inside the container */
+        .sos-button {
+            position: absolute;
+            top: 20px;
+            left: 8px;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sos-button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Content -->
+    <div class="container">
+        <button class="sos-button" onclick="triggerSOS()">SOS</button>
+        <h1>Welcome to Elderly Dashboard</h1>
+        <div class="dashboard-options">
+            <a href="(22)Real-Time Chat with Consultant Screen.html">Real-Time Chat</a>
+            <a href="(23)Elderly Profile Screen.html">Profile</a>
+        </div>
+        <div class="logout-link">
+            <a href="#" id="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const confirmLogout = confirm('Are you sure you want to log out?');
+
+            if (confirmLogout) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        function triggerSOS() {
+            // Open phone dialer (works on mobile)
+            window.location.href = "tel:+60133339389";
+
+            // Delay redirection to the SOS Alert screen after a few seconds
+            setTimeout(() => {
+                window.location.href = "(27)SOS Alert Screen Call.html";
+            }, 5000); // Redirect after 3 seconds (adjust if needed) ---- 5000 milisecond = 5 second
+        }
+    </script>
+</body>
+</html>

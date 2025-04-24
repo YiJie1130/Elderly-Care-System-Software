@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS Alert - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 400px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .sos-alert {
+            font-size: 24px;
+            font-weight: bold;
+            color: #dc3545; /* Red color for SOS alert */
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .cancel-button {
+            margin-top: 20px;
+        }
+        .cancel-button button {
+            padding: 10px 20px;
+            background-color: #dc3545; /* Red color for cancel button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .cancel-button button:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SOS Alert Title -->
+        <div class="sos-alert">SOS ALERT!</div>
+
+        <!-- Message -->
+        <div class="message">Guardian Connected. You may speak now.</div>
+
+        <!-- Cancel Button -->
+        <div class="cancel-button">
+            <button onclick="cancelSOS()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to cancel SOS
+        function cancelSOS() {
+            alert('SOS alert canceled!'); // Replace with actual cancel logic
+            window.location.href = "(22)Real-Time Chat with Consultant Screen.html";
+        }
+    </script>
+</body>
+</html>

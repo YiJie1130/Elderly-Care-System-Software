@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Elderly Care Companion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background.jpg'); /* Replace with your image file name */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.5); /* Grey color with 50% opacity */
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 600px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .exit-options {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .exit-options a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #1e5e00;
+            padding: 10px 15px;
+            text-align: center;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+        .exit-options a.exit {
+            background-color: #4815a1; /* Red color for exit */
+        }
+        .exit-options a:hover {
+            opacity: 0.8;
+        }
+        .dashboard-options {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .dashboard-options a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 15px;
+            border-radius: 15px;
+            text-align: center;
+            flex: 1;
+            font-size: 14px;
+        }
+        .dashboard-options a:hover {
+            background-color: #0056b3;
+        }
+        .logout-link {
+            margin-top: 20px;
+        }
+        .logout-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .logout-link a:hover {
+            text-decoration: underline;
+        }
+        .search-section {
+            margin-bottom: 20px;
+        }
+        .search-section input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-section input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-section input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .patient-details-title{
+            text-align: center;
+        }
+        .patient-details {
+            text-align: left;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .patient-details h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .patient-details p {
+            margin: 5px 0;
+        }
+        .patient-details img {
+            max-width: 100px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .form-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-actions a, .form-actions input[type="submit"] {
+            text-decoration: none;
+            color: #fff;
+            background-color: #1e4b0c;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .form-actions a[disabled] {
+            background-color: #ccc;
+            cursor: not-allowed;
+            pointer-events: none; /* Prevent clicks */
+        }
+        .form-actions a.edit {
+            background-color: #28a745; /* Green color for edit button */
+        }
+        .form-actions a.delete {
+            background-color: #dc3545; /* Red color for delete button */
+        }
+        .form-actions a:hover, .form-actions input[type="submit"]:hover {
+            opacity: 0.8;
+        }
+        .create {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            background-color: transparent; /* Remove background color */
+        }
+
+        .create a {
+            background-color: #1d63f0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .create a:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Admin Dashboard</h1>
+        <div class="dashboard-options">
+            <a href="(9)Manage User Account Screen.html">Manage User Account</a>
+        </div>
+        <div class="exit-options">
+            <a href="(4)Administrator Home Screen.html" class="exit">Back</a>
+        </div>
+
+        <div class="search-section">
+            <h2>Health and Data Updates Report</h2>
+            <form id="search-form" method="post">
+                <input type="text" placeholder="Search Elderly ID" name="search_patient_id" id="search_patient_id">
+                <input type="submit" value="Search" name="search_patient">
+            </form>
+        </div>
+
+        <div class="patient-details-title">
+            <h2>Elderly Details</h2>
+        </div>
+
+        <div id="default-patient-details" class="patient-details">
+            <img src="placeholder.jpg" alt="Elderly Image">
+            <p><strong>Elderly ID:</strong> -</p>
+            <p><strong>Elderly Name:</strong> -</p>
+            <p><strong>Age:</strong> -</p>
+            <p><strong>Contact:</strong> -</p>
+            <p><strong>Guardian:</strong> -</p>
+            <p><strong>Guardian Contact:</strong> -</p>
+            <p><strong>Elderly's Status:</strong> -</p>
+            <div class="form-actions">
+                <a href="#" class="edit" id="edit-button" disabled>Edit</a>
+                <a href="#" class="delete" id="delete-button" disabled>Delete</a>
+            </div>
+        </div>
+
+        <div class="create">
+            <a href="(6)Create New Patient Screen.html" >Create New Elderly</a>
+        </div>
+
+        <br>
+
+        <div class="exit-options">
+            <a href="#" id="logout-link" class="exit">Logout</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const confirmLogout = confirm('Are you sure you want to log out?');
+
+            if (confirmLogout) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        document.getElementById('search-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const searchQuery = document.getElementById('search_patient_id').value;
+
+            if (!searchQuery.trim()) {
+                alert('Please Enter Elderly ID to Search.');
+                event.preventDefault();
+            }
+            else{
+                // Send AJAX request
+                event.preventDefault();
+
+                fetch('database_function.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `search_patient=true&search_patient_id=${encodeURIComponent(searchQuery)}`,
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        // Check if the response contains the error message
+                        if (data.includes('No Elderly Found!')) {
+                            alert('No Elderly Found!');
+                        } else {
+                            // Update the search results section with the response
+                            document.getElementById('default-patient-details').innerHTML = data;
+
+                            // Enable the Edit and Delete buttons
+                            document.getElementById('edit-button').removeAttribute('disabled');
+                            document.getElementById('delete-button').removeAttribute('disabled');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
